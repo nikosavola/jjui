@@ -117,7 +117,7 @@ func (h *History) flush() {
 	}
 	defer f.Close()
 	data := []byte(strings.Join([]string(content), "\n") + "\n")
-	f.Write(data)
+	_, _ = f.Write(data)
 }
 
 func (h *History) historyFile() string {

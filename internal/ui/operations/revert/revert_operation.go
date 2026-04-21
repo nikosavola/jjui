@@ -32,7 +32,6 @@ type styles struct {
 	sourceMarker lipgloss.Style
 	targetMarker lipgloss.Style
 	changeId     lipgloss.Style
-	text         lipgloss.Style
 }
 
 var _ operations.Operation = (*Operation)(nil)

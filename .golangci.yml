@@ -1,0 +1,40 @@
+version: "2"
+
+linters:
+  default: none
+  enable:
+    - errcheck
+    - govet
+    - staticcheck
+    - unused
+    - ineffassign
+
+  settings:
+    errcheck:
+      check-blank: false
+      exclude-functions:
+        # Fire-and-forget writes used in UI rendering and buffer operations
+        - (*github.com/idursun/jjui/internal/ui/render.TextBuilder).Write
+        - (*bytes.Buffer).Write
+        - (*bytes.Buffer).WriteString
+        - (*bytes.Buffer).WriteByte
+        - fmt.Fprint
+        - fmt.Fprintf
+        - fmt.Fprintln
+        - io.WriteString
+    staticcheck:
+      checks:
+        - "all"
+        - "-QF*" # quickfix suggestions are style-only, not bugs
+        - "-ST*" # style rules - the project has its own consistent conventions
+        - "-S1021" # merging var declaration with assignment is a style preference
+
+  exclusions:
+    presets:
+      - std-error-handling
+      - common-false-positives
+    rules:
+      # Allow unchecked Close/Serve/Reject in cleanup and goroutine contexts
+      - text: "Error return value of .*(Close|Serve|Reject).*is not checked"
+        linters:
+          - errcheck

@@ -74,7 +74,8 @@ func ParseRowsStreaming(reader io.Reader, controlChannel <-chan ControlMsg, batc
 			return
 		}
 
-		if _, ok := waitForControl(controlChannel, done); !ok {
+		_, controlOk := waitForControl(controlChannel, done) //nolint:staticcheck // controlOk is used in the condition below
+		if !controlOk {
 			return
 		}
 	}()
