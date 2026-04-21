@@ -74,7 +74,7 @@ func ParseRowsStreaming(reader io.Reader, controlChannel <-chan ControlMsg, batc
 			return
 		}
 
-		_, controlOk := waitForControl(controlChannel, done) //nolint:staticcheck // controlOk is used in the condition below
+		_, controlOk := waitForControl(controlChannel, done) //nolint:staticcheck // SA4006 false positive: controlOk is read in the if-condition below
 		if !controlOk {
 			return
 		}
